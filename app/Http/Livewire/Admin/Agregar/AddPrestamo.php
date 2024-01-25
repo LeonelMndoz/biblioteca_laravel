@@ -9,7 +9,7 @@ use App\Models\Ejemplare;
 
 class AddPrestamo extends Component
 {
-
+    
     public $prestamo = [];
     public $usuariopr, $ejempr;
 
@@ -21,7 +21,10 @@ class AddPrestamo extends Component
     {
         $newPrestamo = new Prestamo($this->prestamo);
         $newPrestamo->save();
+        session()->flash('flash.banner','EL PRESTAMO SE REALIZO CORRECTAMENTE');
+        session()->flash('flash.bannerStyle','success');
         $this->reset(['prestamo']);
+        return redirect('Agregar/AddPrestamo');
     }
 
     public function render()

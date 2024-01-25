@@ -20,6 +20,26 @@
             </div>
 
             <div class="mt-4">
+                <x-label for="apellidop" value="{{ __('Apellido Paterno') }}" />
+                <x-input id="apellidop" class="block mt-1 w-full" type="apellidop" name="apellidop" :value="old('apellidop')" required autocomplete="username" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="apellidom" value="{{ __('Apellido Materno') }}" />
+                <x-input id="apellidom" class="block mt-1 w-full" type="apellidom" name="apellidom" :value="old('apellidom')" required autocomplete="username" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="telefono" value="{{ __('Telefono') }}" />
+                <x-input id="telefono" class="block mt-1 w-full" type="telefono" name="telefono" :value="old('telefono')" required autocomplete="username" />
+            </div>
+
+            <div class="mt-4">
+                <x-label for="direccion" value="{{ __('Direccion') }}" />
+                <x-input id="direccion" class="block mt-1 w-full" type="direccion" name="direccion" :value="old('direccion')" required autocomplete="username" />
+            </div>
+
+            <div class="mt-4">
                 <x-label for="password" value="{{ __('Password') }}" />
                 <x-input id="password" class="block mt-1 w-full" type="password" name="password" required autocomplete="new-password" />
             </div>
@@ -27,11 +47,6 @@
             <div class="mt-4">
                 <x-label for="password_confirmation" value="{{ __('Confirm Password') }}" />
                 <x-input id="password_confirmation" class="block mt-1 w-full" type="password" name="password_confirmation" required autocomplete="new-password" />
-            </div>
-
-            <div class="mt-4">
-                <x-label for="rol" value="{{ __('Rol') }}" />
-                <x-input id="rol" class="block mt-1 w-full" type="text" name="rol" required autocomplete="new-password" />
             </div>
 
             @if (Laravel\Jetstream\Jetstream::hasTermsAndPrivacyPolicyFeature())

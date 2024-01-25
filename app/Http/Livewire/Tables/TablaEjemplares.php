@@ -17,10 +17,13 @@ class TablaEjemplares extends LivewireDatatable
 
     //habilitar la opcion de checkbox opteniendo el id en la tabla
     public $hideable = 'select';
+    public $clave,$statu_id,$librodetalle_id, $open = 0;
+
 
     public function builder()
     {
-        return Ejemplare::query();
+        return Ejemplare::query()->leftJoin('librodetalles','librodetalles.id','ejemplares.librodetalle_id')      ->leftJoin('paquetes', 'paquetes.id', 'ejemplares.statu_id');
+
     }
 
     public function columns()
@@ -36,34 +39,25 @@ class TablaEjemplares extends LivewireDatatable
                 ->filterable()
                 ->label('Clave del libro'), //Como quieres que se muestre en la pag
 
-            Column::name('statu_id')
+            Column::name('s.dispo')
                 ->defaultSort('asc')
                 ->searchable()
                 ->filterable()
                 ->label('Disponibilidad'),
 
-            Column::name('librodetalle_id')
+            Column::name('librodetalles.titulo')
                 ->defaultSort('asc')
                 ->searchable()
                 ->filterable()
-                ->label('Libro al que pertenece')
+                ->label('Libro al que pertenece'),
 
-            //Mostrar Portada
-            /*
-            Column::callback(['id','portada'], function ($id,$portada) {
-                $open2 = $this->open2;
-                $ID2=$this->ID2;
-                return view('livewire.admin.img.img-button', ['portada' => $portada,'id' => $id,
-                'open2' => $open2, 'ID2' => $ID2]);
-            })->label('Portada')->unsortable()->excludeFromExport(),
+            Column::callback(['id','clave', 'statu_id', 'librodetalle_id'], function($id, $clave, $statu_id, $librodetalle_id){
+                $open = $this->open;
+                $ID = $this->ID;
+                return view('livewire.admin.acciones.ejemplar-acciones', ['clave'=> $clave, 'id' => $id, 'open' => $open, 'ID' => $ID, 'statu_id' => $statu_id, 'librodetalle_id'=> $librodetalle_id]);
+            })->label('Acciones'),
 
-            //Mostrar Pdfs
-            Column::callback(['id','pdf'], function ($id,$pdf) {
-                $open3 = $this->open3;
-                $ID3=$this->ID3;
-                return view('livewire.admin.pdf.pdf-button', ['pdf' => $pdf,'id' => $id,
-                'open3' => $open3, 'ID3' => $ID3]);
-            })->label('Pdf Contenido')->unsortable()->excludeFromExport(),*/
+            
         ];
     }
 
@@ -101,4 +95,24 @@ class TablaEjemplares extends LivewireDatatable
                 ]
             ];
     }
+    
+            //------------------------- FUNCION ELIMINAR --------------------
+
+            public function delete_ejemplar($id){
+                Ejemplare::destroy($id);
+            }
+        
+            public $ID;
+            public function openModalPopover($id)
+            {
+                $this->open = true;
+                $this->ID = $id;
+            }
+            public function closeModalPopover()
+            {
+                $this->open = false;
+            }
+        
+            //------------------------- FUNCION ELIMINAR --------------------
 }
+

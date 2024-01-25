@@ -10,4 +10,5 @@ class ViewUsuario extends Component
     {
         return view('livewire.admin.mostrar.view-usuario');
     }
+
 }

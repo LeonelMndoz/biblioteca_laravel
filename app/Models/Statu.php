@@ -12,7 +12,7 @@ class Statu extends Model
     protected $primaryKey = 'id';
     protected $fillable = [
         "id",
-        "status"
+        "dispo"
     ] ;
 
     public function Ejemplar()

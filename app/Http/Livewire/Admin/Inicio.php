@@ -22,6 +22,16 @@ class Inicio extends Component
 
     ];
 
+    protected $messages =[
+        'milibro.titulo.required'=> 'El titulo del libro es requerido',
+        'milibro.titulo.unique'=> 'El titulo del libro ya existe',
+        'milibro.autor.required'=> 'El autor del libro es requerido',
+        'milibro.añopublicacion.required'=> 'El año de publicacion es requerido',
+        'portada.required'=> 'La portada del libro es requerido',
+        'pdf.required'=> 'El pdf del libro es requerido',
+
+    ];
+
 
     public function render()
     {

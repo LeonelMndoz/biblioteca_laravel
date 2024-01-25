@@ -2,6 +2,9 @@
 
 namespace App\Http\Livewire\Tables;
 use App\Models\Prestamo;
+use App\Models\User;
+use App\Models\Ejemplare;
+use Laravel\Jetstream\Contracts\UpdatesTeamNames;
 //SE USAN PARA LA ESTRUCTURA DE LA TABLA
 use Mediconesystems\LivewireDatatables\Column;
 use Mediconesystems\LivewireDatatables\Action;
@@ -17,10 +20,11 @@ class TablaPrestamos extends LivewireDatatable
 
     //habilitar la opcion de checkbox opteniendo el id en la tabla
     public $hideable = 'select';
+    public $open=0, $user_id, $fechaprestamo, $ejemplare_id, $fechadevolucion, $prestamo_id ;
 
     public function builder()
     {
-        return Prestamo::query();
+        return Prestamo::query()->leftJoin('users','users.id','prestamos.user_id')->leftJoin('ejemplares','ejemplares.id', 'prestamos.ejemplare_id' );
     }
 
     public function columns()
@@ -29,7 +33,7 @@ class TablaPrestamos extends LivewireDatatable
             //AQUI SE OBTIENE EL ID DE CADA REGISTRO
             Column::checkbox(),
 
-            Column::name('user_id') //Llamas desde la base de datos
+            Column::name('users.name') //Llamas desde la base de datos
             ->defaultSort('asc')
             ->searchable()
             ->filterable()
@@ -47,29 +51,20 @@ class TablaPrestamos extends LivewireDatatable
                 ->filterable()
                 ->label('Fecha de devolucion'),
             
-                Column::name('ejemplare_id')
+                Column::name('ejemplares.clave')
                 ->defaultSort('asc')
                 ->searchable()
                 ->filterable()
                 ->label('Clave de Libro'),
 
+                Column::callback(['id','user_id', 'fechaprestamo', 'ejemplare_id', 'fechadevolucion'], function($prestamo_id, $user_id, $fechaprestamo, $ejemplare_id,$fechadevolucion){
+                    $open = $this->open;
+                    $ID = $this->ID;
+                    return view('livewire.admin.acciones.prestamo-acciones', ['user_id'=> $user_id, 'id' => $prestamo_id, 'open' => $open, 'ID' => $ID, 'fechaprestamo' => $fechaprestamo, 'ejemplare_id'=> $ejemplare_id, 'fechadevolucion'=> $fechadevolucion,
+                    'usuario'=>User::get(), 'ejemplare' => Ejemplare::get()]);
+                })->label('Acciones')->unsortable()->excludeFromExport(),
 
-            //Mostrar Portada
-            /*
-            Column::callback(['id','portada'], function ($id,$portada) {
-                $open2 = $this->open2;
-                $ID2=$this->ID2;
-                return view('livewire.admin.img.img-button', ['portada' => $portada,'id' => $id,
-                'open2' => $open2, 'ID2' => $ID2]);
-            })->label('Portada')->unsortable()->excludeFromExport(),
-
-            //Mostrar Pdfs
-            Column::callback(['id','pdf'], function ($id,$pdf) {
-                $open3 = $this->open3;
-                $ID3=$this->ID3;
-                return view('livewire.admin.pdf.pdf-button', ['pdf' => $pdf,'id' => $id,
-                'open3' => $open3, 'ID3' => $ID3]);
-            })->label('Pdf Contenido')->unsortable()->excludeFromExport(),*/
+                
         ];
     }
 
@@ -107,4 +102,41 @@ class TablaPrestamos extends LivewireDatatable
                 ]
             ];
     }
+
+    //========================= METODO EDITAR =========================
+    //===MODAL===
+    public $ID;
+            public function openModalPopover($id)
+            {
+                $this->open = true;
+                $this->ID = $id;
+            }
+            public function closeModalPopover()
+            {
+                $this->open = false;
+            }
+    //===MODAL===
+
+    //===== FUNCION =====
+    public function edit_ejemplares($id){
+        $this -> openModalPopover($id);
+        $tem=Prestamo::findOrFail($id);
+        $this -> prestamo_id = $id; 
+        $this -> user_id = $tem->user_id; 
+        $this -> fechaprestamo = $tem->fechaprestamo; 
+        $this -> fechadevolucion = $tem->fechapadevolucion;
+        $this -> ejemplare_id = $tem->ejemplare_id;
+    }
+
+    public function storeEdit(){
+        
+        $this -> validate(['fechaprestamo' => 'required', 'fechadevolucion' => 'required', 'ejemplare_id' => 'required', 'user_id' => 'required']);
+
+
+        Prestamo::updateOrCreate(['id'=> $this-> prestamo_id],[ 'user_id' => $this-> user_id, 'fechaprestamo' => $this -> fechaprestamo, 'fechadevolucion' => $this -> fechadevolucion, 'ejemplare_id' => $this -> ejemplare_id] );
+
+        $this->closeModalPopover();
+    }
+    //===== FUNCION =====
+
 }

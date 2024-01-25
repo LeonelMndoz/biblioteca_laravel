@@ -15,26 +15,50 @@
                     <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    @can('Agregar libro')
                     <x-nav-link href="{{ route('Agregar') }}" :active="request()->routeIs('Agregar')">
                         {{ __('Agregar Libro') }}
                     </x-nav-link>
-                    <x-nav-link href="{{ route('MostrarLibros') }}" :active="request()->routeIs('MostrarLibros')">
-                        {{ __('Libros') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('ViewUsuario') }}" :active="request()->routeIs('ViewUsuario')">
-                        {{ __('Usuarios') }}
-                    </x-nav-link>
-                    <x-nav-link href="{{ route('AddUsuario') }}" :active="request()->routeIs('AddUsuario')">
-                        {{ __('Agregar Usuario') }}
-                    </x-nav-link>
+                    @endcan
+                    @can('Agregar Prestamo')
                     <x-nav-link href="{{ route('AddPrestamo') }}" :active="request()->routeIs('AddPrestamo')">
                         {{ __('Realizar prestamo') }}
                     </x-nav-link>
+                    @endcan
+                    @can('Agregar Usuario')
+                    <x-nav-link href="{{ route('AddUsuario') }}" :active="request()->routeIs('AddUsuario')">
+                        {{ __('Agregar Usuario') }}
+                    </x-nav-link>
+                    @endcan
+                    @can('Mostrar Libros')
+                    <x-nav-link href="{{ route('MostrarLibros') }}" :active="request()->routeIs('MostrarLibros')">
+                        {{ __('Libros') }}
+                    </x-nav-link>
+                    @endcan
+                    @can('Mostrar Usuarios')
+                    <x-nav-link href="{{ route('ViewUsuario') }}" :active="request()->routeIs('ViewUsuario')">
+                        {{ __('Usuarios') }}
+                    </x-nav-link>
+                    @endcan
+                    @can('Mostrar Prestamos')
                     <x-nav-link href="{{ route('MostrarPrestamos') }}" :active="request()->routeIs('MostrarPrestamos')">
                         {{ __('Prestamos') }}
                     </x-nav-link>
+                    @endcan
+                    @can('Mostrar Ejemplares')
                     <x-nav-link href="{{ route('MostrarEjemplares') }}" :active="request()->routeIs('MostrarEjemplares')">
                         {{ __('Ejemplares') }}
+                    </x-nav-link>
+                    @endcan
+
+                    <x-nav-link href="{{ route('Crear') }}" :active="request()->routeIs('Crear')">
+                        {{ __('Crear Rol') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('Mostrar') }}" :active="request()->routeIs('Mostrar')">
+                        {{ __('Mostrar Rol') }}
+                    </x-nav-link>
+                    <x-nav-link href="{{ route('CrearRolesYPermisos') }}" :active="request()->routeIs('CrearRolesYPermisos')">
+                        {{ __('CrearRolesYPermisos') }}
                     </x-nav-link>
                 </div>
             </div>

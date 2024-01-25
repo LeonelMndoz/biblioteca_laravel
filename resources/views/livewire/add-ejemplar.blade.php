@@ -1,7 +1,6 @@
-<!-- component -->
 <div>
 
-            <button wire:click="$set('open', true)" class="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Registrar claves</button>
+            <button wire:click="$set('open', true)" class="flex justify-center rounded-md bg-green-600 w-full mt-5 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm ">Registrar claves</button>
 
 
 
@@ -25,10 +24,8 @@
 
             </x-slot>
             <x-slot name="footer">
-            <button wire:click="add_ejemplar" class="flex justify-center rounded-md bg-indigo-600 mt-5 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm ">Registrar ejemplar</button>
+            <button wire:click="add_ejemplar" class="flex justify-center rounded-md bg-green-600 mt-5 px-3 py-3 text-sm font-semibold leading-6 text-white shadow-sm ">Registrar ejemplar</button>
             </x-slot>
         </x-dialog-modal>
 </div>
 
-
-   

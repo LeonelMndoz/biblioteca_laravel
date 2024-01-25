@@ -9,6 +9,9 @@ use App\Http\Livewire\Admin\Agregar\AddPrestamo;
 use App\Http\Livewire\Admin\Mostrar\MostrarLibros;
 use App\Http\Livewire\Admin\Mostrar\MostrarPrestamos;
 use App\Http\Livewire\Admin\Mostrar\MostrarEjemplares;
+use App\Http\Livewire\Roles\Crear;
+use App\Http\Livewire\Roles\Mostrar;
+use App\Http\Livewire\RolesYPermisos\Crear as CrearRolesYPermisos;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,37 +41,52 @@ Route::middleware([
 Route::get( 
     '/Inicio', 
     Inicio::class 
-)->name('Agregar');
+)->middleware('can:Agregar libro')->name('Agregar');
 
 Route::get( 
     '/Mostrar/ViewUsuario', 
     ViewUsuario::class 
-)->name('ViewUsuario');
+)->middleware('can:Mostrar Usuarios')->name('ViewUsuario');
 
 Route::get( 
     '/Mostrar/MostrarLibros', 
     MostrarLibros::class 
-)->name('MostrarLibros');
+)->middleware('can:Mostrar Libros')->name('MostrarLibros');
 
 Route::get( 
     '/Agregar/AddUsuario', 
     AddUsuario::class 
-)->name('AddUsuario');
+)->middleware('can:Agregar Usuario')->name('AddUsuario');
 
 Route::get( 
     '/Agregar/AddPrestamo', 
     AddPrestamo::class 
-)->name('AddPrestamo');
+)->middleware('can:Agregar Prestamo')->name('AddPrestamo');
 
 Route::get( 
     '/Mostrar/MostrarPrestamos', 
     MostrarPrestamos::class 
-)->name('MostrarPrestamos');
+)->middleware('can:Mostrar Prestamos')->name('MostrarPrestamos');
 
 Route::get( 
     '/Mostrar/MostrarEjemplares', 
     MostrarEjemplares::class 
-)->name('MostrarEjemplares');
+)->middleware('can:Mostrar Ejemplares')->name('MostrarEjemplares');
+
+Route::get( 
+    '/Roles/Crear', 
+    Crear::class 
+)->middleware('can:Mostrar Prestamos')->name('Crear');
+
+Route::get( 
+    '/Roles/Mostrar', 
+    Mostrar::class 
+)->middleware('can:Mostrar Prestamos')->name('Mostrar');
+
+Route::get( 
+    '/RolesYPermisos/Crear', 
+    CrearRolesYPermisos::class 
+)->middleware('can:Mostrar Prestamos')->name('CrearRolesYPermisos');
 
 
 

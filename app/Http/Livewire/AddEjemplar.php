@@ -26,7 +26,10 @@ class AddEjemplar extends Component
         $this->validate();
         $ejemplar = new Ejemplare($this->ejemplar);
         $ejemplar->save();
-        $this->reset(['ejemplar']);
+        session()->flash('flash.banner','Los archivos se han subido correctamente');
+        session()->flash('flash.bannerStyle','success');
+        $this->reset(['ejemplar']); 
+   
     }
 
     public function render()
