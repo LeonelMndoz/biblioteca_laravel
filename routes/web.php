@@ -28,6 +28,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/Cotizacion', function () {
+    return view('cotiza');
+});
+
 Route::middleware([
     'auth:sanctum',
     config('jetstream.auth_session'),

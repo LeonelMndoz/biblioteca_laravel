@@ -24,7 +24,7 @@
         <x-banner />
 
         <div class="min-h-screen bg-gray-100">
-            @livewire('navigation-menu')
+            @livewire('navbar-ov')
 
             <!-- Page Heading -->
             @if (isset($header))
@@ -39,6 +39,8 @@
             <main>
                 {{ $slot }}
             </main>
+        @livewire('footer-ov')
+
         </div>
 
         @stack('modals')
